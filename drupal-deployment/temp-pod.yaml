@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: drupal-init-pod
+spec:
+  containers:
+    - name: drupal
+      image: drupal:latest
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: drupal-storage
+          mountPath: /var/www/html/sites/default/files
+        - name: drupal-config
+          mountPath: /var/www/html/sites/default
+      securityContext:
+        runAsUser: 1000  # Cambiar al usuario adecuado si es necesario
+        runAsGroup: 1000
+  volumes:
+    - name: drupal-storage
+      persistentVolumeClaim:
+        claimName: drupal-pvc-last
+    - name: drupal-config
+      persistentVolumeClaim:
+        claimName: drupal-pvc-last
+  restartPolicy: Never
+

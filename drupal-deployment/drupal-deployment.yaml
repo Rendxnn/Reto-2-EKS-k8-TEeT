@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal
+spec:
+  replicas: 1  # Inicia con una réplica
+  selector:
+    matchLabels:
+      app: drupal
+  template:
+    metadata:
+      labels:
+        app: drupal
+    spec:
+      containers:
+      - name: drupal
+        image: drupal:latest
+        volumeMounts:
+        - name: drupal-files
+          mountPath: /var/www/html/sites/default
+      initContainers:
+      - name: init-drupal-settings
+        image: busybox
+        command: ["sh", "-c", "if [ ! -f /var/www/html/sites/default/settings.php ]; then cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php; else echo 'settings.php already exists'; fi"]
+        volumeMounts:
+        - name: drupal-files
+          mountPath: /var/www/html/sites/default
+      volumes:
+      - name: drupal-files
+        persistentVolumeClaim:
+          claimName: drupal-pvc-last  # Asegúrate de que tienes un PVC configurado
+

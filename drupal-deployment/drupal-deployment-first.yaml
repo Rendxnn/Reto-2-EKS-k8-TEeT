@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: drupal
+  template:
+    metadata:
+      labels:
+        app: drupal
+    spec:
+      initContainers:
+        - name: init-drupal-config
+          image: drupal:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Copia los archivos de configuración iniciales al volumen compartido si no existen
+              if [ ! -f /mnt/sites/default/default.settings.php ]; then
+                cp /var/www/html/sites/default/default.settings.php /mnt/sites/default/default.settings.php
+              fi
+              if [ ! -f /mnt/sites/default/settings.php ]; then
+                cp /var/www/html/sites/default/default.settings.php /mnt/sites/default/settings.php
+              fi
+              # Cambia los permisos y el propietario para que Drupal tenga acceso de escritura
+              chown -R www-data:www-data /mnt/sites/default
+              chmod 664 /mnt/sites/default/settings.php
+              chmod 775 /mnt/sites/default
+          volumeMounts:
+            - name: drupal-files
+              mountPath: /mnt/sites/default
+
+      containers:
+        - name: drupal
+          image: drupal:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html/sites/default
+              name: drupal-files
+
+      volumes:
+        - name: drupal-files
+          persistentVolumeClaim:
+            claimName: drupal-pvc-last
+
