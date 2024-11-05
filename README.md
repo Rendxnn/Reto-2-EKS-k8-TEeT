@@ -100,5 +100,13 @@ kubectl exec -it <nombredelpod> -- /bin/bash
 
 ```
 
+
+Problemas encontrados:
+
+El principal problema que se encontró durante el desarrollo de la actividad fue la carga de archivos de configuración compartidos de Drupal al EFS. Debido a que sin esto, las diferentes replicas trabajaban en diferentes contextos de configuración, resultando en instalaciones fallidas y comportamientos extraños de la aplicación.
+
+Solución empleada:
+Se desplegó inicialmente una sola réplica, que junto con una configuración adecuada para el acceso y creación de archivos de configuración en el File System creado para Drupal, permitió la escalada posterior del servicio a más replicas que accedían a los mismo archivos de configuracion creados por la réplica incial, permitiendo el escaladao final a múltiples réplicas que funcionan como servicios 'stateless', compartiendo una configuración global para todas las réplicas.
+
 # referencias:
 - https://aws.amazon.com/blogs/storage/running-wordpress-on-amazon-eks-with-amazon-efs-intelligent-tiering/
