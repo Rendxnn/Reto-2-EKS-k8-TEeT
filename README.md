@@ -1,6 +1,6 @@
-# info de la materia: ST0263-242-RETO-1
+# ST0263-242-RETO-1
 #
-# Estudiante(s): Samuel Rendón Trujillo. srendont@eafit.edu.co
+# Samuel Rendón Trujillo. srendont@eafit.edu.co
 #
 # Profesor: Álvaro Ospina
 #
