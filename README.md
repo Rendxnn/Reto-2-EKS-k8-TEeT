@@ -38,6 +38,10 @@ Imagen obtenida de <a href="https://aws.amazon.com/blogs/storage/running-wordpre
 Lenguaje de programación: YAML.
 Todo el despliegue se realiza por medio de archivos YAML para la definición de despliegue de servicios, creación de pods, creación de PV's (Persistent Volumes) y PVC's (Persistent Volume Claims) para la interacción con los FS de EFS, y demás.
 
+Todos los códigos y comandos utilizados para el despliegue se pueden encontrar en la carpeta correspondiente a cada servicio en el presente repositorio.
+
+# 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
+
 A continuación se muestran el listado de los pods, servicios, PV's y PVC's presentes en el momento de operación del cluster:
 Pods:
 ![image](https://github.com/user-attachments/assets/c415bc35-a2d3-418b-8c24-1c1a63e141df)
@@ -52,22 +56,49 @@ PVC'S:
 ![image](https://github.com/user-attachments/assets/425ea1ca-14bf-4bb2-9b6c-fde4cbda2597)
 
 
-# 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
-# IP o nombres de dominio en nube o en la máquina servidor.
+A continuación se muestra la configuración DNS para el dominio aplicado en GoDaddy:
+![image](https://github.com/user-attachments/assets/52f5f893-cc30-41f3-bbfb-7542a253bbe1)
 
-## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
 
-## como se lanza el servidor.
+A continuación se muestra la página a la que se accede desde el dominio http://reto2.solargauge.site:
 
-## una mini guia de como un usuario utilizaría el software o la aplicación
+![image](https://github.com/user-attachments/assets/d24bdcc3-2906-4676-9bbc-9c6beb6a98a0)
 
-## opcionalmente - si quiere mostrar resultados o pantallazos 
+
+File Systems creados para la implementación (uno para la base de datos y otro para archivos de configuracion y archivos subidos a Drupal):
+![image](https://github.com/user-attachments/assets/bc7c0fc6-3f35-4e2b-821c-8a208d8d9d0f)
+
+
+Certificado SSL tramitado desde Certificate Manager (AWS): 
+![image](https://github.com/user-attachments/assets/ff17b802-42fc-4ebb-bb40-7137834ffc55)
+
+
 
 # 5. otra información que considere relevante para esta actividad.
 
+### COMANDOS MÁS UTILIZADOS:
+
+Aplicar cambios en un servicio y crear pods: 
+```{bash}
+
+kubectl apply -f <nombredelarchivo.yaml>
+
+```
+
+Ver información relevante sobre un pod o servicio
+```{bash}
+
+kbuectl describe <pod-servicio-segunelcaso> <nombredepodoservicio>
+
+```
+
+Entrar a un pod
+```{bash}
+
+kubectl exec -it <nombredelpod> -- /bin/bash
+
+```
+
 # referencias:
-<debemos siempre reconocer los créditos de partes del código que reutilizaremos, así como referencias a youtube, o referencias bibliográficas utilizadas para desarrollar el proyecto o la actividad>
-## sitio1-url 
-## sitio2-url
-## url de donde tomo info para desarrollar este proyecto
+- https://aws.amazon.com/blogs/storage/running-wordpress-on-amazon-eks-with-amazon-efs-intelligent-tiering/
