@@ -9,6 +9,8 @@
 ## 1. Descripcion
 El reto consistió en el despliegue de un cluster de Kubernetes de alta disponibilidad para una página un CMS drupal (inicialmente Moodle, pero según lo conversado en clase, se pocedió con Drupal). Con una base de datos, y un NFS desplegado en EFS de AWS.
 
+Video de sustentación: https://www.youtube.com/watch?v=kMY5xlOUM2A
+
 ## 1.1. Que aspectos cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
 Se cumplió con todos los requisitos funcinales de la actividad.
